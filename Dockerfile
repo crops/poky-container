@@ -27,9 +27,7 @@ COPY sudoers.usersetup /etc/
 # We remove the user because we add a new one of our own.
 # The usersetup user is solely for adding a new user that has the same uid,
 # as the workspace. 70 is an arbitrary *low* unused uid on debian.
-RUN apt-get -y update && \
-    apt-get clean && \
-    userdel -r yoctouser && \
+RUN userdel -r yoctouser && \
     groupadd -g 70 usersetup && \
     useradd -N -m -u 70 -g 70 usersetup && \
     chmod 755 /usr/bin/usersetup.py \
