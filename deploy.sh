@@ -21,6 +21,10 @@ set -e
 # Don't deploy on pull requests because it could just be junk code that won't
 # get merged
 if [ "${TRAVIS_PULL_REQUEST}" = "false" -a "${TRAVIS_BRANCH}" = "master" ]; then
+
+    if [ "${DEFAULT_DISTRO}" = "${BASE_DISTRO}" ]; then
+        docker tag ${REPO}:${BASE_DISTRO} ${REPO}:latest
+    fi
     docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
     docker push ${REPO}
 else
