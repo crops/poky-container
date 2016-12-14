@@ -14,4 +14,9 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 workdir=$1
 cd $workdir
+# start the vnc server if the user account is set up for it.
+if [ -d $HOME/.vnc ]; then
+    echo "starting vncserver..."
+    vncserver -rfbport 5900  -name POKY $DISPLAY > /dev/null 2>&1
+fi
 exec bash -i
