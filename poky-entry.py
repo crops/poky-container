@@ -32,20 +32,28 @@ parser.add_argument("--id",
                     help='uid and gid to use for the user inside the '
                          'container. It should be in the form uid:gid')
 
+parser.add_argument("--vnc",
+                    help='start a vnc server. To access it, you need to '
+                         'have started the container with -p <host port>:5900.',
+                    action="store_true")
+
+
 args = parser.parse_args()
 
 
 idargs = ""
+vncargs = ""
 if args.id:
-    uid, gid = args.id.split(":") 
+    uid, gid = args.id.split(":")
     idargs = "--uid={} --gid={}".format(uid, gid)
-
 elif args.workdir == '/home/pokyuser':
     # If the workdir wasn't specified pick a default uid and gid since
     # usersetup won't be able to calculate it from the non-existent workdir
     idargs = "--uid=1000 --gid=1000"
+if args.vnc:
+    vncargs = "--skel=/etc/vncskel"
 
-cmd = """usersetup.py --username=pokyuser --workdir={wd} {idargs}
-         poky-launch.sh {wd}""".format(wd=args.workdir, idargs=idargs)
+cmd = """usersetup.py --username=pokyuser --workdir={wd} {idargs} {vncargs}
+         poky-launch.sh {wd}""".format(wd=args.workdir, idargs=idargs,vncargs=vncargs)
 cmd = cmd.split()
 os.execvp(cmd[0], cmd)
