@@ -13,5 +13,10 @@
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 workdir=$1
+shift
 cd $workdir
-exec bash -i
+if [ $# -gt 0 ]; then
+    exec bash -c "$*"
+else
+    exec bash -i
+fi
