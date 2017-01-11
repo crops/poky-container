@@ -28,6 +28,15 @@ env:
 script:
   - sed -i -e "s#FROM crops/yocto:ubuntu-14.04#FROM crops/yocto:${BASE_DISTRO}#" Dockerfile
   - docker build -t ${REPO}:${BASE_DISTRO} .
+  - annotate-output bash -c "cd tests; ./runtests.sh"
 
 after_success:
   - bash deploy.sh
+
+notifications:
+  email:
+    recipients:
+      - brian.avery@intel.com
+      - randy.e.witt@intel.com
+    on_success: change
+    on_failure: always
