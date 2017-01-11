@@ -32,12 +32,16 @@ parser.add_argument("--id",
                     help='uid and gid to use for the user inside the '
                          'container. It should be in the form uid:gid')
 
+parser.add_argument("--cmd",default='',
+                    help='command to run after setting up container. '
+                         'Often used for testing.')
+
 args = parser.parse_args()
 
 
 idargs = ""
 if args.id:
-    uid, gid = args.id.split(":") 
+    uid, gid = args.id.split(":")
     idargs = "--uid={} --gid={}".format(uid, gid)
 
 elif args.workdir == '/home/pokyuser':
@@ -46,6 +50,6 @@ elif args.workdir == '/home/pokyuser':
     idargs = "--uid=1000 --gid=1000"
 
 cmd = """usersetup.py --username=pokyuser --workdir={wd} {idargs}
-         poky-launch.sh {wd}""".format(wd=args.workdir, idargs=idargs)
+         poky-launch.sh {wd} {cmd}""".format(wd=args.workdir, idargs=idargs,cmd=args.cmd)
 cmd = cmd.split()
 os.execvp(cmd[0], cmd)
