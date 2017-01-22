@@ -50,8 +50,8 @@ elif args.workdir == '/home/pokyuser':
     # usersetup won't be able to calculate it from the non-existent workdir
     idargs = "--uid=1000 --gid=1000"
 
-cmd = """usersetup.py --username=pokyuser --workdir={wd} {idargs}
-         poky-launch.sh {wd} {cmd}""" \
+cmd = """dumb-init -c -- usersetup.py --username=pokyuser --workdir={wd}
+         {idargs} poky-launch.sh {wd} {cmd}""" \
              .format(wd=args.workdir, idargs=idargs,cmd=args.cmd)
 cmd = cmd.split()
 os.execvp(cmd[0], cmd)
