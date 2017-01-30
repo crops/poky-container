@@ -17,8 +17,19 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# This just verifies that dumb-init is pid 1.
+# This verifies that dumb-init is running as the correct user and is running
+# what we expected.
 
-if [ "`cat /proc/1/comm`" != "dumb-init" ]; then
+username="usersetup"
+username_width=${#username}
+expected='1 usersetup /usr/bin/dumb-init -- /usr/bin/poky-entry.py --workdir=/workdir --cmd=/workdir/run-dumb-init-check.sh'
+actual=`ps -w -w h -C dumb-init -o pid:1,user:$username_width,args`
+
+if [ "$expected" != "$actual" ]; then
+    printf "expected dumb-init not found\n"
+    printf "expected:\n%s\n" "$expected"
+    printf "actual:\n%s\n" "$actual"
+    printf "all:\n"
+    ps -w -w -A -o pid,user:$username_width,args
     exit 1
 fi
