@@ -17,8 +17,8 @@ point.
 * **Create a workdir or volume**
   * **Linux**
 
-    The workdir you create will be used for all output from toaster. This means
-    both configuration *and* output. For example a user could create a directory using the command
+    The workdir you create will be used for the output created while using the container.
+    For example a user could create a directory using the command
   
     ```
     mkdir -p /home/myuser/mystuff
