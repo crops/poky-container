@@ -26,7 +26,7 @@ for i in run-*.sh; do
     # get absolute path to it
     LOCAL_WDIR=$(readlink -f ${LOCAL_WDIR})
     cp $i $LOCAL_WDIR
-    docker run -it --rm  -v $LOCAL_WDIR:/workdir $IMAGE \
+    docker run --rm  -v $LOCAL_WDIR:/workdir $IMAGE \
 	--workdir=/workdir --cmd="/workdir/$i"
     RET=$?
     if [ ${RET} != 0 ]; then
