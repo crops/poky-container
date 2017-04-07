@@ -63,4 +63,4 @@ point.
   pokyuser@3bbac563cacd:/workdir$
   ```
   At this point you should be able to follow the same instructions as described
-  in https://www.yoctoproject.org/docs/2.1/yocto-project-qs/yocto-project-qs.html#releases.
+  in https://www.yoctoproject.org/docs/2.2.1/yocto-project-qs/yocto-project-qs.html#releases.
