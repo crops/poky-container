@@ -27,7 +27,7 @@ failure () {
     exit -1
 }
 
-git clone  git://git.yoctoproject.org/poky
+git clone --depth=1 git://git.yoctoproject.org/poky
 
 . ./poky/oe-init-build-env $BUILD_DIR
 
