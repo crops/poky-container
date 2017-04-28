@@ -32,9 +32,7 @@ before_install:
   - sudo apt-get install -y devscripts
 
 script:
-  - sed -i -e "s#FROM crops/yocto:ubuntu-14.04#FROM crops/yocto:${BASE_DISTRO}#" Dockerfile
-  - docker build -t ${REPO}:${BASE_DISTRO} .
-  - annotate-output bash -c "cd tests; ./runtests.sh ${REPO}:${BASE_DISTRO}"
+  - ./build-and-test.sh
 
 after_success:
   - bash deploy.sh
