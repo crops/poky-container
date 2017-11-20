@@ -14,6 +14,7 @@ env:
     - BASE_DISTRO=fedora-24
     - BASE_DISTRO=fedora-25
     - BASE_DISTRO=fedora-26
+    - BASE_DISTRO=fedora-27
     - BASE_DISTRO=opensuse-42.2
     - BASE_DISTRO=ubuntu-14.04
     - BASE_DISTRO=ubuntu-16.04
