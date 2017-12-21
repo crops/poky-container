@@ -40,4 +40,4 @@ RUN userdel -r yoctouser && \
 USER usersetup
 ENV LANG=en_US.UTF-8
 
-ENTRYPOINT ["poky-entry.py"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--", "/usr/bin/poky-entry.py"]

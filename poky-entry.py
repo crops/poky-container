@@ -28,6 +28,7 @@ parser.add_argument('--workdir', default='/home/pokyuser',
                          'In the abscence of the "id" argument, the uid and '
                          'gid of the workdir will also be used for the user '
                          'in the container.')
+
 parser.add_argument("--id",
                     help='uid and gid to use for the user inside the '
                          'container. It should be in the form uid:gid')
@@ -37,6 +38,9 @@ parser.add_argument("--vnc",
                          'have started the container with -p <host port>:5900.',
                     action="store_true")
 
+parser.add_argument("--cmd",default='',
+                    help='command to run after setting up container. '
+                         'Often used for testing.')
 
 args = parser.parse_args()
 
@@ -54,6 +58,6 @@ if args.vnc:
     vncargs = "--skel=/etc/vncskel"
 
 cmd = """usersetup.py --username=pokyuser --workdir={wd} {idargs} {vncargs}
-         poky-launch.sh {wd}""".format(wd=args.workdir, idargs=idargs,vncargs=vncargs)
+         poky-launch.sh {wd} {cmd}""".format(wd=args.workdir, idargs=idargs,vncargs=vncargs,cmd=args.cmd)
 cmd = cmd.split()
 os.execvp(cmd[0], cmd)

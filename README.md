@@ -17,8 +17,8 @@ point.
 * **Create a workdir or volume**
   * **Linux**
 
-    The workdir you create will be used for all output from toaster. This means
-    both configuration *and* output. For example a user could create a directory using the command
+    The workdir you create will be used for the output created while using the container.
+    For example a user could create a directory using the command
   
     ```
     mkdir -p /home/myuser/mystuff
@@ -63,4 +63,4 @@ point.
   pokyuser@3bbac563cacd:/workdir$
   ```
   At this point you should be able to follow the same instructions as described
-  in https://www.yoctoproject.org/docs/2.1/yocto-project-qs/yocto-project-qs.html#releases.
+  in https://www.yoctoproject.org/docs/current/yocto-project-qs/yocto-project-qs.html#releases.

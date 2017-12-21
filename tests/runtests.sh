@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# runtests.sh
+#
 # Copyright (C) 2016 Intel Corporation
 #
 # This program is free software; you can redistribute it and/or modify
@@ -12,18 +15,25 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-workdir=$1
-shift
-cd $workdir
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# start the vnc server if the user account is set up for it.
-if [ -d $HOME/.vnc ]; then
-    echo "starting vncserver..."
-    vncserver -rfbport 5900  -name POKY $DISPLAY > /dev/null 2>&1
-fi
+IMAGE=$1
 
-if [ $# -gt 0 ]; then
-    exec bash -c "$*"
-else
-    exec bash -i
-fi
+for i in run-*.sh; do
+    echo Running Test $i
+    # make temporary workdir
+    LOCAL_WDIR=$(mktemp -d  wdir_XXXXX)
+    # get absolute path to it
+    LOCAL_WDIR=$(readlink -f ${LOCAL_WDIR})
+    cp $i $LOCAL_WDIR
+    docker run --rm  -v $LOCAL_WDIR:/workdir:Z $IMAGE \
+	--workdir=/workdir --cmd="/workdir/$i"
+    RET=$?
+    if [ ${RET} != 0 ]; then
+	echo "Test $i failed"
+	echo "Workdir located in $LOCAL_WDIR"
+	exit ${RET}
+    fi
+    rm $LOCAL_WDIR -rf
+done
+echo "All tests PASSED"

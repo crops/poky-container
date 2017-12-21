@@ -12,18 +12,18 @@
 #
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
-workdir=$1
-shift
-cd $workdir
+# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+#
+set -e
 
-# start the vnc server if the user account is set up for it.
-if [ -d $HOME/.vnc ]; then
-    echo "starting vncserver..."
-    vncserver -rfbport 5900  -name POKY $DISPLAY > /dev/null 2>&1
-fi
+DOCKERFILE=`mktemp -p . Dockerfile.XXX`
 
-if [ $# -gt 0 ]; then
-    exec bash -c "$*"
-else
-    exec bash -i
+sed -e "s#FROM crops/yocto:ubuntu-14.04#FROM crops/yocto:${BASE_DISTRO}#" Dockerfile > $DOCKERFILE
+docker build --pull -f $DOCKERFILE -t ${REPO}:${BASE_DISTRO} .
+
+if command -v annotate-output; then
+    ANNOTATE_OUTPUT=annotate-output
 fi
+$ANNOTATE_OUTPUT bash -c "cd tests; ./runtests.sh ${REPO}:${BASE_DISTRO}"
+
+rm -f $DOCKERFILE
