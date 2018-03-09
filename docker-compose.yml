@@ -12,7 +12,7 @@ version: '2'
 
 services:
   poky:
-    build: ./poky-container
+    build: .
     image: crops/poky:latest
 
     environment:
