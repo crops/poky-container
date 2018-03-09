@@ -17,6 +17,11 @@ FROM crops/yocto:ubuntu-16.04-base
 
 USER root
 
+# The repo tool is used by a lot of yocto builds add it
+RUN apt-get update \
+ && apt-get install -y repo \
+ && rm -rf /var/lib/apt/lists/*
+
 ADD https://raw.githubusercontent.com/crops/extsdk-container/master/restrict_useradd.sh  \
         https://raw.githubusercontent.com/crops/extsdk-container/master/restrict_groupadd.sh \
         https://raw.githubusercontent.com/crops/extsdk-container/master/usersetup.py \
