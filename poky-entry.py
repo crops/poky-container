@@ -44,7 +44,8 @@ idargs = ""
 if args.id:
     uid, gid = args.id.split(":")
     idargs = "--uid={} --gid={}".format(uid, gid)
-
+elif os.environ.get('USER_ID') and os.environ.get('USER_GID'):
+    idargs = "--uid={} --gid={}".format(os.environ['USER_ID'], os.environ['USER_GID'])
 elif args.workdir == '/home/pokyuser':
     # If the workdir wasn't specified pick a default uid and gid since
     # usersetup won't be able to calculate it from the non-existent workdir

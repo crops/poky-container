@@ -44,5 +44,6 @@ RUN userdel -r yoctouser && \
 
 USER usersetup
 ENV LANG=en_US.UTF-8
+ENV USER_ID=1000 USER_GID=1000
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--", "/usr/bin/poky-entry.py"]
