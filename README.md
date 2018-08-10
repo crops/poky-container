@@ -19,7 +19,7 @@ point.
 
     The workdir you create will be used for the output created while using the container.
     For example a user could create a directory using the command
-  
+
     ```
     mkdir -p /home/myuser/mystuff
     ```
@@ -31,7 +31,7 @@ point.
 
     For the rest of the Linux instructions we'll assume the workdir chosen was
     `/home/myuser/mystuff`.
-    
+
   * **Windows/Mac**
 
     On Windows or Mac a workdir isn't needed. Instead the volume called *myvolume* will be used. This volume should have been created when following the instructions at https://github.com/crops/docker-win-mac-docs/wiki.
@@ -46,9 +46,9 @@ point.
     ```
     docker run --rm -it -v /home/myuser/mystuff:/workdir crops/poky --workdir=/workdir
     ```
-    
+
   * **Windows/Mac**
-  
+
     ```
     docker run --rm -it -v myvolume:/workdir crops/poky --workdir=/workdir
     ```
@@ -62,5 +62,4 @@ point.
   ```
   pokyuser@3bbac563cacd:/workdir$
   ```
-  At this point you should be able to follow the same instructions as described
-  in https://www.yoctoproject.org/docs/current/yocto-project-qs/yocto-project-qs.html#releases.
+  At this point you should be able to follow the instructions in the [Yocto Project Development Tasks Manual](https://www.yoctoproject.org/docs/current/dev-manual/dev-manual.html#cloning-and-checking-out-branchs) to get started with Yocto project.
