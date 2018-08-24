@@ -25,9 +25,12 @@ for i in run-*.sh; do
     LOCAL_WDIR=$(mktemp -d  wdir_XXXXX)
     # get absolute path to it
     LOCAL_WDIR=$(readlink -f ${LOCAL_WDIR})
+    chmod o+x $LOCAL_WDIR
     cp $i $LOCAL_WDIR
-    docker run --rm -t -v $LOCAL_WDIR:/workdir:Z $IMAGE \
-	--workdir=/workdir --cmd="/workdir/$i"
+    docker run --rm -t -v $LOCAL_WDIR:/workdir \
+	--workdir /workdir \
+	$IMAGE \
+	/workdir/$i
     RET=$?
     if [ ${RET} != 0 ]; then
 	echo "Test $i failed"
