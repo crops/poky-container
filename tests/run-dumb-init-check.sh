@@ -22,7 +22,7 @@
 
 username="usersetup"
 username_width=${#username}
-expected='1 usersetup /usr/bin/dumb-init -- /usr/bin/poky-entry.py --workdir=/workdir --cmd=/workdir/run-dumb-init-check.sh'
+expected='1 usersetup /usr/bin/dumb-init -- /usr/bin/poky-entry.py /workdir/run-dumb-init-check.sh'
 actual=`ps -w -w h -C dumb-init -o pid:1,user:$username_width,args`
 
 if [ "$expected" != "$actual" ]; then
@@ -31,5 +31,12 @@ if [ "$expected" != "$actual" ]; then
     printf "actual:\n%s\n" "$actual"
     printf "all:\n"
     ps -w -w -A -o pid,user:$username_width,args
+    exit 1
+fi
+
+if [ "$(pwd)" != "/workdir" ] ; then
+    printf "expected workdir not found\n"
+    printf "expected:\n%s\n" "/workdir"
+    printf "actual:\n%s\n" "$(pwd)"
     exit 1
 fi
