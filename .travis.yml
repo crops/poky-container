@@ -12,8 +12,13 @@ env:
     - BASE_DISTRO=debian-8
     - BASE_DISTRO=debian-9
     - BASE_DISTRO=fedora-27
+    - BASE_DISTRO=fedora-28
+    - BASE_DISTRO=opensuse-42.3
+    - BASE_DISTRO=opensuse-15.0
     - BASE_DISTRO=ubuntu-14.04
     - BASE_DISTRO=ubuntu-16.04
+    - BASE_DISTRO=ubuntu-18.04
+    - BASE_DISTRO=ubuntu-18.10
 
   global:
     - REPO=crops/poky
