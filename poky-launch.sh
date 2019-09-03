@@ -16,7 +16,7 @@ workdir=$1
 shift
 cd $workdir
 if [ $# -gt 0 ]; then
-    exec bash -c "$*"
+    exec bash -c "$@"
 else
     exec bash -i
 fi
