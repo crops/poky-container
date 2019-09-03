@@ -24,6 +24,12 @@ ADD https://raw.githubusercontent.com/crops/extsdk-container/master/restrict_use
 COPY poky-entry.py poky-launch.sh /usr/bin/
 COPY sudoers.usersetup /etc/
 
+# For ubuntu, do not use dash.
+RUN which dash &> /dev/null && (\
+    echo "dash dash/sh boolean false" | debconf-set-selections && \
+    DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash) || \
+    echo "Skipping dash reconfigure (not applicable)"
+
 # We remove the user because we add a new one of our own.
 # The usersetup user is solely for adding a new user that has the same uid,
 # as the workspace. 70 is an arbitrary *low* unused uid on debian.
