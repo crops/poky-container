@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# run-dumb-init-check.sh
+# run-workdir-check.sh
 #
-# Copyright (C) 2016 Intel Corporation
+# Copyright (C) 2019 Intel Corporation
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License version 2 as
@@ -17,19 +17,11 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-# This verifies that dumb-init is running as the correct user and is running
-# what we expected.
+# This verifies that the workdir is what we expect it to be.
 
-username="usersetup"
-username_width=${#username}
-expected='1 usersetup /usr/bin/dumb-init -- /usr/bin/poky-entry.py --workdir /workdir /workdir/run-dumb-init-check.sh'
-actual=`ps -w -w h -C dumb-init -o pid:1,user:$username_width,args`
-
-if [ "$expected" != "$actual" ]; then
-    printf "expected dumb-init not found\n"
-    printf "expected:\n%s\n" "$expected"
-    printf "actual:\n%s\n" "$actual"
-    printf "all:\n"
-    ps -w -w -A -o pid,user:$username_width,args
+if [ "$(pwd)" != "/workdir" ] ; then
+    printf "expected workdir not found\n"
+    printf "expected:\n%s\n" "/workdir"
+    printf "actual:\n%s\n" "$(pwd)"
     exit 1
 fi
