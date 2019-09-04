@@ -39,16 +39,15 @@ parser.add_argument("cmd", nargs=argparse.REMAINDER,
 
 args = parser.parse_args()
 
+if os.getcwd() != "/home/yoctouser":
+    # --workdir was given to the docker command, not to us, so
+    # we need to pretend it was given to us...
+    args.workdir = os.getcwd()
 
 idargs = ""
 if args.id:
     uid, gid = args.id.split(":")
     idargs = "--uid={} --gid={}".format(uid, gid)
-
-elif os.getcwd() != "/home/yoctouser":
-    # --workdir was given to the docker command, not to us, so
-    # we need to pretend it was given to us...
-    args.workdir = os.getcwd()
 
 elif args.workdir == '/home/pokyuser':
     # If the workdir wasn't specified pick a default uid and gid since
