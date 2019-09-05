@@ -26,9 +26,13 @@ for i in run-*.sh; do
     # get absolute path to it
     LOCAL_WDIR=$(readlink -f ${LOCAL_WDIR})
     cp $i $LOCAL_WDIR
+
+    # This is to make sure the workdir is correct when using either docker
+    # or the entrypoint workdir argument.
     if [ "$i" == "run-workdir-check.sh" ]; then
-	# This is to make sure the workdir is correct when using either docker
-	# or the entrypoint workdir argument.
+	# For passing the workdir to docker, use chmod to ensure that docker
+	# will have permission to access the directory
+	chmod o+x $LOCAL_WDIR
 	docker run --rm -t -v $LOCAL_WDIR:/workdir \
 	    --workdir /workdir \
 	    $IMAGE \
