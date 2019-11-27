@@ -18,7 +18,7 @@ set -e
 
 DOCKERFILE=`mktemp -p . Dockerfile.XXX`
 
-sed -e "s#FROM crops/yocto:ubuntu-14.04#FROM crops/yocto:${BASE_DISTRO}#" Dockerfile > $DOCKERFILE
+sed -e "s#FROM crops/yocto:ubuntu-16.04#FROM crops/yocto:${BASE_DISTRO}#" Dockerfile > $DOCKERFILE
 docker build --pull -f $DOCKERFILE -t ${REPO}:${BASE_DISTRO} .
 
 if command -v annotate-output; then
