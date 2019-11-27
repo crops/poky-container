@@ -21,7 +21,7 @@ ADD https://raw.githubusercontent.com/crops/extsdk-container/master/restrict_use
         https://raw.githubusercontent.com/crops/extsdk-container/master/restrict_groupadd.sh \
         https://raw.githubusercontent.com/crops/extsdk-container/master/usersetup.py \
         /usr/bin/
-COPY poky-entry.py poky-launch.sh /usr/bin/
+COPY distro-entry.sh poky-entry.py poky-launch.sh /usr/bin/
 COPY sudoers.usersetup /etc/
 
 # For ubuntu, do not use dash.
@@ -46,4 +46,4 @@ RUN userdel -r yoctouser && \
 USER usersetup
 ENV LANG=en_US.UTF-8
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--", "/usr/bin/poky-entry.py"]
+ENTRYPOINT ["/usr/bin/distro-entry.sh", "/usr/bin/dumb-init", "--", "/usr/bin/poky-entry.py"]
