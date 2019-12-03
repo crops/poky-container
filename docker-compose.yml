@@ -1,0 +1,23 @@
+#
+# set the USER_ID and USER_GID in the .env file
+#
+#   $ printf "USER_ID=$(id -u)\nUSER_GID=$(id -g)\n" > .env
+#
+# then launch this with:
+#
+#   $ docker-compose build poky
+#   $ docker-compose run --rm  poky
+
+version: '2'
+
+services:
+  poky:
+    build: .
+    image: crops/poky:latest
+
+    environment:
+      - USER_ID
+      - USER_GID
+
+    volumes:
+      - ./workspace:/workspace
