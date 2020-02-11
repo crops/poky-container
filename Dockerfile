@@ -13,7 +13,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-FROM crops/yocto:ubuntu-16.04-base
+FROM crops/yocto:ubuntu-18.04-base
 
 USER root
 
