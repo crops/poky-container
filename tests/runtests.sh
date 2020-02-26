@@ -16,6 +16,10 @@
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+# Allow the user to specify another command to use for building such as podman.
+if [ "${ENGINE_CMD}" = "" ]; then
+    ENGINE_CMD="docker"
+fi
 
 IMAGE=$1
 
@@ -33,16 +37,16 @@ for i in run-*.sh; do
 	# For passing the workdir to docker, use chmod to ensure that docker
 	# will have permission to access the directory
 	chmod o+x $LOCAL_WDIR
-	docker run --rm -t -v $LOCAL_WDIR:/workdir \
+	${ENGINE_CMD} run --rm -t -v $LOCAL_WDIR:/workdir \
 	    --workdir /workdir \
 	    $IMAGE \
 	    /workdir/$i &&
-	docker run --rm -t -v $LOCAL_WDIR:/workdir \
+	${ENGINE_CMD} run --rm -t -v $LOCAL_WDIR:/workdir \
 	    $IMAGE \
 	    --workdir /workdir \
 	    /workdir/$i
     else
-	docker run --rm -t -v $LOCAL_WDIR:/workdir \
+	${ENGINE_CMD} run --rm -t -v $LOCAL_WDIR:/workdir \
 	    $IMAGE \
 	    --workdir /workdir \
 	    /workdir/$i
@@ -64,7 +68,7 @@ LOCAL_WDIR=$(mktemp -d  wdir_XXXXX)
 LOCAL_WDIR=$(readlink -f ${LOCAL_WDIR})
 cp check_args.py $LOCAL_WDIR
 
-docker run --rm -t -v $LOCAL_WDIR:/workdir \
+${ENGINE_CMD} run --rm -t -v $LOCAL_WDIR:/workdir \
     $IMAGE \
     --workdir /workdir \
     python /workdir/check_args.py \
@@ -86,7 +90,7 @@ LOCAL_WDIR=$(mktemp -d  wdir_XXXXX)
 LOCAL_WDIR=$(readlink -f ${LOCAL_WDIR})
 cp check-path.sh $LOCAL_WDIR
 
-docker run --rm -t -v $LOCAL_WDIR:/workdir --user=root \
+${ENGINE_CMD} run --rm -t -v $LOCAL_WDIR:/workdir --user=root \
     --entrypoint="/workdir/check-path.sh" \
     $IMAGE
 

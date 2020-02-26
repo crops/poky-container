@@ -16,10 +16,15 @@
 #
 set -e
 
+# Allow the user to specify another command to use for building such as podman.
+if [ "${ENGINE_CMD}" = "" ]; then
+    ENGINE_CMD="docker"
+fi
+
 DOCKERFILE=`mktemp -p . Dockerfile.XXX`
 
 sed -e "s#FROM crops/yocto:ubuntu-16.04#FROM crops/yocto:${BASE_DISTRO}#" Dockerfile > $DOCKERFILE
-docker build --pull -f $DOCKERFILE -t ${REPO}:${BASE_DISTRO} .
+${ENGINE_CMD} build --pull -f $DOCKERFILE -t ${REPO}:${BASE_DISTRO} .
 
 if command -v annotate-output; then
     ANNOTATE_OUTPUT=annotate-output
