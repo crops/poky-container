@@ -102,4 +102,13 @@ if [ ${RET} != 0 ]; then
 fi
 rm $LOCAL_WDIR -rf
 
+
+echo Running Distro Check Test
+./distro-check.sh ${ENGINE_CMD} ${IMAGE} ${BASE_DISTRO}
+RET=$?
+if [ ${RET} != 0 ]; then
+    echo "Test \"Distro Check\" failed"
+    exit ${RET}
+fi
+
 echo "All tests PASSED"
