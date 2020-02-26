@@ -21,10 +21,7 @@ if [ "${ENGINE_CMD}" = "" ]; then
     ENGINE_CMD="docker"
 fi
 
-DOCKERFILE=`mktemp -p . Dockerfile.XXX`
-
-sed -e "s#FROM crops/yocto:ubuntu-16.04#FROM crops/yocto:${BASE_DISTRO}#" Dockerfile > $DOCKERFILE
-${ENGINE_CMD} build --pull -f $DOCKERFILE -t ${REPO}:${BASE_DISTRO} .
+${ENGINE_CMD} build --build-arg BASE_DISTRO=${BASE_DISTRO} --pull -t ${REPO}:${BASE_DISTRO} .
 
 if command -v annotate-output; then
     ANNOTATE_OUTPUT=annotate-output

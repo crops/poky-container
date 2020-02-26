@@ -13,7 +13,12 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-FROM crops/yocto:ubuntu-18.04-base
+# Since this Dockerfile is used in multiple images, force the builder to
+# specify the BASE_DISTRO. This should hopefully prevent accidentally using
+# a default, when another distro was desired.
+ARG BASE_DISTRO=SPECIFY_ME
+
+FROM crops/yocto:$BASE_DISTRO-base
 
 USER root
 
