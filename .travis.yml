@@ -18,7 +18,6 @@ env:
     - BASE_DISTRO=opensuse-15.1
     - BASE_DISTRO=ubuntu-16.04
     - BASE_DISTRO=ubuntu-18.04
-    - BASE_DISTRO=ubuntu-19.04
 
   global:
     - REPO=crops/poky
