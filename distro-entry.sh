@@ -14,13 +14,9 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 
 # This entry point is so that we can do distro specific changes to the launch.
-if grep -q CentOS /etc/*release; then
-    # This is so that tar >= 1.28 can be used, which is required to pass the
-    # sanity checks as of poky commit 2c7624c17e43f9215cf7dcebf7258d28711bc3ce.
-    . /opt/poky/3.0/environment-setup-x86_64-pokysdk-linux || exit 1
-
-    # This is so that a gcc >= 5.0 will be used
-    . scl_source enable devtoolset-8 || exit 1
+if [ -e /opt/poky/3.1/environment-setup-x86_64-pokysdk-linux ]; then
+    # Buildtools has been installed so enable it
+    . /opt/poky/3.1/environment-setup-x86_64-pokysdk-linux || exit 1
 fi
 
 exec "$@"
