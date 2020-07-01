@@ -29,6 +29,8 @@ declare -A distros
 distros["centos-7"]="CentOS Linux 7 (Core)"
 distros["debian-9"]="Debian GNU/Linux 9 (stretch)"
 distros["debian-10"]="Debian GNU/Linux 10 (buster)"
+distros["fedora-31"]="Fedora 31 (Container Image)"
+distros["fedora-32"]="Fedora 32 (Container Image)"
 distros["opensuse-15.1"]="openSUSE Leap 15.1"
 distros["ubuntu-16.04"]="Ubuntu 16.04"
 distros["ubuntu-18.04"]="Ubuntu 18.04"

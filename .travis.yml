@@ -11,6 +11,8 @@ env:
     - BASE_DISTRO=centos-7
     - BASE_DISTRO=debian-9
     - BASE_DISTRO=debian-10
+    - BASE_DISTRO=fedora-31
+    - BASE_DISTRO=fedora-32
     - BASE_DISTRO=opensuse-15.1
     - BASE_DISTRO=ubuntu-16.04
     - BASE_DISTRO=ubuntu-18.04
