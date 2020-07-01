@@ -39,6 +39,7 @@ RUN which dash &> /dev/null && (\
 # The usersetup user is solely for adding a new user that has the same uid,
 # as the workspace. 70 is an arbitrary *low* unused uid on debian.
 RUN userdel -r yoctouser && \
+    mkdir /home/yoctouser && \
     groupadd -g 70 usersetup && \
     useradd -N -m -u 70 -g 70 usersetup && \
     chmod 755 /usr/bin/usersetup.py \
