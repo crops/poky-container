@@ -71,7 +71,7 @@ cp check_args.py $LOCAL_WDIR
 ${ENGINE_CMD} run --rm -t -v $LOCAL_WDIR:/workdir \
     $IMAGE \
     --workdir /workdir \
-    python /workdir/check_args.py \
+    python3 /workdir/check_args.py \
     arg1 "second argument passed" "third arg" arg4 "this is the last argument"
 
 RET=$?
