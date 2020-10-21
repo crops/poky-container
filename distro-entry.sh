@@ -14,9 +14,16 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 
 # This entry point is so that we can do distro specific changes to the launch.
-if [ -e /opt/poky/3.1/environment-setup-x86_64-pokysdk-linux ]; then
+if [ "$(uname -m)" = "aarch64" ]; then
+    SETUPSCRIPT="environment-setup-aarch64-pokysdk-linux"
+elif [ "$(uname -m)" = "x86_64" ]; then
+    SETUPSCRIPT="environment-setup-x86_64-pokysdk-linux"
+fi
+
+# This entry point is so that we can do distro specific changes to the launch.
+if [ -e /opt/poky/3.1.3/${SETUPSCRIPT} ]; then
     # Buildtools has been installed so enable it
-    . /opt/poky/3.1/environment-setup-x86_64-pokysdk-linux || exit 1
+    . /opt/poky/3.1.3/${SETUPSCRIPT} || exit 1
 fi
 
 exec "$@"
