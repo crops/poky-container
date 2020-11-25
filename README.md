@@ -46,6 +46,10 @@ point.
     ```
     docker run --rm -it -v /home/myuser/mystuff:/workdir crops/poky --workdir=/workdir
     ```
+    or, if you have SELinux in enforcing mode:
+    ```
+    docker run --rm -it -v /home/myuser/mystuff:/workdir:Z crops/poky --workdir=/workdir
+    ```
     
   * **Windows/Mac**
   
