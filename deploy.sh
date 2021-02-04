@@ -25,12 +25,11 @@ fi
 
 # Don't deploy on pull requests because it could just be junk code that won't
 # get merged
-if [ "${TRAVIS_PULL_REQUEST}" = "false" -a "${TRAVIS_BRANCH}" = "master" ]; then
-
+if ([ "${GITHUB_EVENT_NAME}" = "push" ] || [ "${GITHUB_EVENT_NAME}" = "workflow_dispatch" ]) && [ "${GITHUB_REF}" = "refs/heads/master" ]; then
     if [ "${DEFAULT_DISTRO}" = "${BASE_DISTRO}" ]; then
         ${ENGINE_CMD} tag ${REPO}:${BASE_DISTRO} ${REPO}:latest
     fi
-    ${ENGINE_CMD} login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+    echo $DOCKER_PASSWORD | ${ENGINE_CMD} login -u $DOCKER_USERNAME --password-stdin
     ${ENGINE_CMD} push ${REPO}
 else
     echo "Not pushing since build was triggered by a pull request."

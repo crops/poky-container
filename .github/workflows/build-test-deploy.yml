@@ -1,0 +1,45 @@
+name: poky-container build and test
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+  # Allow for manually running
+  workflow_dispatch:
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        base_distro: [
+                      centos-7,
+                      centos-8,
+                      debian-9,
+                      debian-10,
+                      fedora-31,
+                      fedora-32,
+                      opensuse-15.1,
+                      opensuse-15.2,
+                      ubuntu-16.04,
+                      ubuntu-18.04,
+                      ubuntu-20.04
+        ]
+    env:
+      BASE_DISTRO: ${{ matrix.base_distro }}
+      REPO: crops/poky
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Build and test the images
+      - name: Run build-and-test.sh
+        run: ./build-and-test.sh
+
+      # Deploy the images
+      - name: Deploy
+        run: bash deploy.sh
