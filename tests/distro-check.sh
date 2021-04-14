@@ -27,7 +27,7 @@ BASE_DISTRO="$3"
 declare -A distros
 
 distros["centos-7"]="CentOS Linux 7 (Core)"
-distros["centos-8"]="CentOS Linux 8 (Core)"
+distros["centos-8"]="CentOS Linux 8"
 distros["debian-9"]="Debian GNU/Linux 9 (stretch)"
 distros["debian-10"]="Debian GNU/Linux 10 (buster)"
 distros["fedora-31"]="Fedora 31 (Container Image)"
