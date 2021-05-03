@@ -16,9 +16,8 @@
 # Since this Dockerfile is used in multiple images, force the builder to
 # specify the BASE_DISTRO. This should hopefully prevent accidentally using
 # a default, when another distro was desired.
-ARG BASE_DISTRO=SPECIFY_ME
 
-FROM crops/yocto:$BASE_DISTRO-base
+FROM crops/yocto:ubuntu-16.04-builder
 
 USER root
 
@@ -34,6 +33,18 @@ RUN which dash &> /dev/null && (\
     echo "dash dash/sh boolean false" | debconf-set-selections && \
     DEBIAN_FRONTEND=noninteractive dpkg-reconfigure dash) || \
     echo "Skipping dash reconfigure (not applicable)"
+
+# install python3.8
+RUN apt update && \
+    apt install -y software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa && \
+    apt update && \
+    apt install -y python3.9
+
+# Add utils
+RUN apt-get update && \
+    apt-get install -y vim \
+    python3-pip
 
 # We remove the user because we add a new one of our own.
 # The usersetup user is solely for adding a new user that has the same uid,
