@@ -21,6 +21,8 @@ jobs:
                       debian-10,
                       fedora-31,
                       fedora-32,
+                      fedora-33,
+                      fedora-34,
                       opensuse-15.1,
                       opensuse-15.2,
                       ubuntu-16.04,
