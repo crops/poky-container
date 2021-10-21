@@ -19,6 +19,7 @@ jobs:
                       centos-8,
                       debian-9,
                       debian-10,
+                      debian-11,
                       fedora-33,
                       fedora-34,
                       opensuse-15.2,
