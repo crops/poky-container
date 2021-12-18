@@ -8,6 +8,10 @@ on:
   # Allow for manually running
   workflow_dispatch:
 
+  # Run at 01:42 UTC every Saturday
+  schedule:
+    - cron: '42 1 * * 6'
+
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
