@@ -21,9 +21,9 @@ elif [ "$(uname -m)" = "x86_64" ]; then
 fi
 
 # This entry point is so that we can do distro specific changes to the launch.
-if [ -e /opt/poky/3.1.3/${SETUPSCRIPT} ]; then
+if [ -e /opt/poky/3.1.13/${SETUPSCRIPT} ]; then
     # Buildtools has been installed so enable it
-    . /opt/poky/3.1.3/${SETUPSCRIPT} || exit 1
+    . /opt/poky/3.1.13/${SETUPSCRIPT} || exit 1
 fi
 
 exec "$@"
