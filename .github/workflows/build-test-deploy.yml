@@ -27,9 +27,9 @@ jobs:
                       fedora-34,
                       fedora-35,
                       opensuse-15.2,
-                      ubuntu-16.04,
                       ubuntu-18.04,
-                      ubuntu-20.04
+                      ubuntu-20.04,
+                      ubuntu-22.04
         ]
     env:
       BASE_DISTRO: ${{ matrix.base_distro }}

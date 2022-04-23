@@ -34,9 +34,9 @@ distros["debian-11"]="Debian GNU/Linux 11 (bullseye)"
 distros["fedora-34"]="Fedora 34 (Container Image)"
 distros["fedora-35"]="Fedora Linux 35 (Container Image)"
 distros["opensuse-15.2"]="openSUSE Leap 15.2"
-distros["ubuntu-16.04"]="Ubuntu 16.04"
 distros["ubuntu-18.04"]="Ubuntu 18.04"
 distros["ubuntu-20.04"]="Ubuntu 20.04"
+distros["ubuntu-22.04"]="Ubuntu 22.04"
 
 # If the distro is unknown it is a failure
 if [ "${distros[${BASE_DISTRO}]}" = "" ]; then
