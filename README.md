@@ -67,4 +67,6 @@ point.
   pokyuser@3bbac563cacd:/workdir$
   ```
   At this point you should be able to follow the same instructions as described
-  in https://www.yoctoproject.org/docs/current/yocto-project-qs/yocto-project-qs.html#releases.
+  in the [Using Git to Clone Poky](https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html#use-git-to-clone-poky)
+  section of the [Yocto Project Quick Build](https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html#yocto-project-quick-build)
+  document.
