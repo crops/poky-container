@@ -20,6 +20,7 @@ jobs:
       matrix:
         base_distro: [
                       alma-8,
+                      alma-9,
                       centos-7,
                       debian-9,
                       debian-10,
