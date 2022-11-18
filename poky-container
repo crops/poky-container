@@ -1,0 +1,83 @@
+#!/bin/bash
+
+usage() {
+cat << EOF
+Usage:
+    poky-container list
+                List available images
+
+    poky-container run IMAGE [HOST_WORKDIR]
+                Run the selected image on a specific location
+
+Parameters:
+    IMAGE           The name of the image to run
+    HOST_WORKDIR    The working directory, ie, location if the workspace
+                    on the host, which will show as /workdir in the
+                    container.
+                    By default, the current working directory is used.
+
+EOF
+}
+
+
+list() {
+cat << EOF
+AlmaLinux:
+    alma-8
+
+CentOS:
+    centos-7 centos-8
+
+Debian:
+    debian-9 debian-10 debian-11
+
+Fedora:
+    fedora-33 fedora-34 fedora-35 fedora-36
+
+OpenSuse:
+    opensuse-15.2 opensuse-15.3
+
+Ubuntu:
+    ubuntu-16.04 ubuntu-18.04 ubuntu-20.04 ubuntu-22.04
+
+Other:
+    latest
+
+EOF
+}
+
+run() {
+    CONTAINER_WORKDIR=/workdir
+    HOST_WORKDIR=$(readlink -f .)
+    if [ $# -eq 2 ]; then
+        HOST_WORKDIR=$(readlink -f $2)
+    elif [ $# -ne 1 ]; then
+        echo "Error: Invalid arguments"
+        usage
+        exit 1
+    fi
+    IMAGE=$1
+
+    docker run --rm -it -v $HOST_WORKDIR:$CONTAINER_WORKDIR \
+    crops/poky:$IMAGE --workdir=$CONTAINER_WORKDIR
+}
+
+
+CMD=$1
+shift
+
+case $CMD in
+    list)
+        list
+        ;;
+    run)
+        run $@
+        ;;
+    *)
+        usage
+        ;;
+esac
+
+
+
+
