@@ -58,7 +58,14 @@ run() {
     fi
     IMAGE=$1
 
+    SSH_AUTH_SOCK_MOUNT=""
+    if [ -z "$SSH_AUTH_SOCK" ]; then
+        eval $(ssh-agent)
+        SSH_AUTH_SOCK_MOUNT="--mount type=bind,source=$(readlink -f $SSH_AUTH_SOCK),destination=/tmp/ssh-auth-sock"
+    fi
+
     docker run --rm -it -v $HOST_WORKDIR:$CONTAINER_WORKDIR \
+    $SSH_AUTH_SOCK_MOUNT \
     crops/poky:$IMAGE --workdir=$CONTAINER_WORKDIR
 }
 
