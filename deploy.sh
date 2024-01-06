@@ -1,18 +1,8 @@
 #!/bin/bash
 # Copyright (C) 2016 Intel Corporation
+# Copyright (C) 2024 Konsulko Group
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License version 2 as
-# published by the Free Software Foundation.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License along
-# with this program; if not, write to the Free Software Foundation, Inc.,
-# 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+# SPDX-License-Identifier: GPL-2.0-only
 #
 # This script is meant to be consumed by travis. It's very simple but running
 # a loop in travis.yml isn't a great thing.
@@ -33,6 +23,15 @@ if ([ "${GITHUB_EVENT_NAME}" = "push" ] || [ "${GITHUB_EVENT_NAME}" = "workflow_
         ${ENGINE_CMD} tag ${REPO}:${BASE_DISTRO} ${REPO}:latest
         ${ENGINE_CMD} push ${REPO}:latest
     fi
+
+    echo $GHCR_PASSWORD | ${ENGINE_CMD} login ghcr.io -u $GHCR_USERNAME --password-stdin
+    ${ENGINE_CMD} push ghcr.io/${REPO}:${BASE_DISTRO}
+
+    if [ "${DEFAULT_DISTRO}" = "${BASE_DISTRO}" ]; then
+	${ENGINE_CMD} tag ${REPO}:${BASE_DISTRO} ghcr.io/${REPO}:latest
+	${ENGINE_CMD} push ghcr.io/${REPO}:latest
+    fi
+
 else
     echo "Not pushing since build was triggered by a pull request."
 fi
