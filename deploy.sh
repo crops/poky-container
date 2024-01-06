@@ -24,6 +24,8 @@ if ([ "${GITHUB_EVENT_NAME}" = "push" ] || [ "${GITHUB_EVENT_NAME}" = "workflow_
         ${ENGINE_CMD} push ${REPO}:latest
     fi
 
+    ${ENGINE_CMD} tag ${REPO}:${BASE_DISTRO} ghcr.io/${REPO}:${BASE_DISTRO}
+
     echo $GHCR_PASSWORD | ${ENGINE_CMD} login ghcr.io -u $GHCR_USERNAME --password-stdin
     ${ENGINE_CMD} push ghcr.io/${REPO}:${BASE_DISTRO}
 
