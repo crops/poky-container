@@ -27,7 +27,11 @@ jobs:
                       debian-10,
                       debian-11,
                       fedora-36,
+                      fedora-37,
+                      fedora-38,
+                      fedora-39,
                       opensuse-15.4,
+                      opensuse-15.5,
                       ubuntu-18.04,
                       ubuntu-20.04,
                       ubuntu-22.04
