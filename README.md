@@ -69,4 +69,7 @@ point.
   pokyuser@3bbac563cacd:/workdir$
   ```
   At this point you should be able to follow the same instructions as described
-  in https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html
+  in https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html#building-your-image to build an image.
+
+  Note that the container should not be used to clone Poky or obtain any other meta-data, which must be done
+  _outside_ the container using common tools like Git, as stated in https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html#use-git-to-clone-poky
