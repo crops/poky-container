@@ -25,7 +25,7 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument('--workdir', default='/home/pokyuser',
                     help='The active directory once the container is running. '
-                         'In the abscence of the "id" argument, the uid and '
+                         'In the absence of the "id" argument, the uid and '
                          'gid of the workdir will also be used for the user '
                          'in the container.')
 
