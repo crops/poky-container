@@ -57,14 +57,19 @@ point.
     docker run --rm -it -v myvolume:/workdir crops/poky --workdir=/workdir
     ```
 
-  Let's discuss the options:
-  * **_--workdir=/workdir_**: This causes the container to start in the directory
+  Available options:
+  * **_--help_**: show help message and exit.
+  * **_--workdir=WORKDIR_**: This causes the container to start in the directory
     specified. This can be any directory in the container. The container will also use the uid and gid
     of the workdir as the uid and gid of the user in the container.
+  * **_--id=ID_**: uid and gid to use for the user inside the container. It should be in the form uid:gid.
 
-  This should put you at a prompt similar to:
+  The previous example should put you at a prompt similar to:
   ```
   pokyuser@3bbac563cacd:/workdir$
   ```
   At this point you should be able to follow the same instructions as described
-  in https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html
+  in https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html#building-your-image to build an image.
+
+  Note that the container should not be used to clone Poky or obtain any other meta-data, which must be done
+  _outside_ the container using common tools like Git, as stated in https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html#use-git-to-clone-poky
