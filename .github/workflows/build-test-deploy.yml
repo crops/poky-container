@@ -1,88 +1,88 @@
 name: poky-container build and test
 on:
-    push:
-        branches:
-            - master
-    pull_request:
+  push:
+    branches:
+      - master
+  pull_request:
 
-    # Allow for manually running
-    workflow_dispatch:
+  # Allow for manually running
+  workflow_dispatch:
 
-    # Run at 01:42 UTC every Saturday
-    schedule:
-        - cron: "42 1 * * 6"
+  # Run at 01:42 UTC every Saturday
+  schedule:
+    - cron: "42 1 * * 6"
 
 jobs:
-    build-test-deploy:
-        runs-on: ubuntu-latest
-        permissions:
-            packages: write
-        strategy:
-            fail-fast: false
-            matrix:
-                base_distro:
-                    [
-                        alma-8,
-                        alma-9,
-                        centos-7,
-                        debian-10,
-                        debian-11,
-                        debian-12,
-                        fedora-36,
-                        fedora-37,
-                        fedora-38,
-                        fedora-39,
-                        fedora-40,
-                        opensuse-15.4,
-                        opensuse-15.5,
-                        ubuntu-18.04,
-                        ubuntu-20.04,
-                        ubuntu-22.04,
-                    ]
-        env:
-            BASE_DISTRO: ${{ matrix.base_distro }}
-            REPO: crops/poky
-            DEFAULT_DISTRO: ubuntu-18.04
-            DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-            DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-            GHCR_USERNAME: ${{ github.actor }}
-            GHCR_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+  build-test-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    strategy:
+      fail-fast: false
+      matrix:
+        base_distro:
+          [
+            alma-8,
+            alma-9,
+            centos-7,
+            debian-10,
+            debian-11,
+            debian-12,
+            fedora-36,
+            fedora-37,
+            fedora-38,
+            fedora-39,
+            fedora-40,
+            opensuse-15.4,
+            opensuse-15.5,
+            ubuntu-18.04,
+            ubuntu-20.04,
+            ubuntu-22.04,
+          ]
+    env:
+      BASE_DISTRO: ${{ matrix.base_distro }}
+      REPO: crops/poky
+      DEFAULT_DISTRO: ubuntu-18.04
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      GHCR_USERNAME: ${{ github.actor }}
+      GHCR_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
-        steps:
-            - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-            - name: Generate tag
-              id: tag
-              run: echo "TAG=${{github.env.REPO}}:${{ matrix.base_distro }}" >> $GITHUB_OUTPUT
+      - name: Generate tag
+        id: tag
+        run: echo "TAG=${{github.env.REPO}}:${{ matrix.base_distro }}" >> $GITHUB_OUTPUT
 
-            - name: Login to GitHub Container Registry
-              uses: docker/login-action@v3
-              with:
-                  registry: ghcr.io
-                  username: ${{ github.env.GHCR_USERNAME }}
-                  password: ${{ github.env.GHCR_PASSWORD }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.env.GHCR_USERNAME }}
+          password: ${{ github.env.GHCR_PASSWORD }}
 
-            - name: Set up QEMU
-              uses: docker/setup-qemu-action@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
 
-            - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-            - name: Build
-              uses: docker/build-push-action@v5
-              with:
-                  platforms: linux/amd64,linux/arm64
-                  load: true
-                  pull: true
-                  build-args: |
-                      BASE_DISTRO=${{ matrix.base_distro }}
-                  tags: ${{ steps.tag.outputs.TAG }}
+      - name: Build
+        uses: docker/build-push-action@v5
+        with:
+          platforms: linux/amd64,linux/arm64
+          load: true
+          pull: true
+          build-args: |
+            BASE_DISTRO=${{ matrix.base_distro }}
+          tags: ${{ steps.tag.outputs.TAG }}
 
-            - name: Test
-              run: ./tests/test.sh ${{ steps.tag.outputs.TAG }}
+      - name: Test
+        run: ./tests/test.sh ${{ steps.tag.outputs.TAG }}
 
-            - name: Push image to GHCR
-              run: |
-                  docker buildx imagetools create \
-                    --tag ghcr.io/${{ steps.tag.outputs.TAG }} \
-                    ${{ steps.tag.outputs.TAG }}
+      - name: Push image to GHCR
+        run: |
+          docker buildx imagetools create \
+          --tag ghcr.io/${{ steps.tag.outputs.TAG }} \
+          ${{ steps.tag.outputs.TAG }}
