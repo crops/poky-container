@@ -23,7 +23,6 @@ jobs:
         base_distro: [
                       alma-8,
                       alma-9,
-                      centos-7,
                       debian-10,
                       debian-11,
                       debian-12,
