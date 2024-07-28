@@ -18,7 +18,6 @@ declare -A distros
 
 distros["alma-8"]="AlmaLinux 8"
 distros["alma-9"]="AlmaLinux 9"
-distros["centos-7"]="CentOS Linux 7 (Core)"
 distros["debian-9"]="Debian GNU/Linux 9 (stretch)"
 distros["debian-10"]="Debian GNU/Linux 10 (buster)"
 distros["debian-11"]="Debian GNU/Linux 11 (bullseye)"
