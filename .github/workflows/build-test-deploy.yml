@@ -33,7 +33,8 @@ jobs:
                       opensuse-15.6,
                       ubuntu-18.04,
                       ubuntu-20.04,
-                      ubuntu-22.04
+                      ubuntu-22.04,
+                      ubuntu-24.04
         ]
     env:
       BASE_DISTRO: ${{ matrix.base_distro }}
