@@ -29,6 +29,7 @@ distros["opensuse-15.6"]="openSUSE Leap 15.6"
 distros["ubuntu-18.04"]="Ubuntu 18.04"
 distros["ubuntu-20.04"]="Ubuntu 20.04"
 distros["ubuntu-22.04"]="Ubuntu 22.04"
+distros["ubuntu-24.04"]="Ubuntu 24.04 LTS"
 
 # If the distro is unknown it is a failure
 if [ "${distros[${BASE_DISTRO}]}" = "" ]; then
