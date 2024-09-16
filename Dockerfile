@@ -29,6 +29,11 @@ ADD https://raw.githubusercontent.com/crops/extsdk-container/master/restrict_use
 COPY distro-entry.sh poky-entry.py poky-launch.sh /usr/bin/
 COPY sudoers.usersetup /etc/
 
+RUN echo -e "\n# ssh-agent socket bind-mounted from host\n"\
+"if [ -s /tmp/ssh-auth-sock ]; then\n"\
+"    export SSH_AUTH_SOCK=/tmp/ssh-auth-sock\n"\
+"fi\n" >> /etc/skel/.bashrc
+
 # For ubuntu, do not use dash.
 RUN which dash &> /dev/null && (\
     echo "dash dash/sh boolean false" | debconf-set-selections && \
